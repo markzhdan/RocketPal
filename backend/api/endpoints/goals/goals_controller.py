@@ -5,10 +5,12 @@ from pymongo.mongo_client import MongoClient
 from bson.json_util import dumps
 import uuid
 from bson import ObjectId
+from api.models.goal import GoalData
 
 SECRET_KEY = "your-secret-key"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 10000
+
 
 class Database:
     def __init__(self):
@@ -24,8 +26,11 @@ router = APIRouter()
 
 client = Database().get_database()
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-def get_current_user(token: str = Depends(oauth2_scheme)):
+goals_collection = client.Goals
+
+oauth2_scheme_token = OAuth2PasswordBearer(tokenUrl="token")
+
+def get_current_user(token: str = Depends(oauth2_scheme_token)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: str = payload.get("sub")
@@ -44,9 +49,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
         )
     
 @router.get("/get_goals")
-def get_goals(request: Request):
-    header_content = request.headers.get("Authorization")
-    token = header_content.split("Bearer")[1].strip()
+def get_goals(token: str = Depends(oauth2_scheme_token)):
     user_id = get_current_user(token)
     if user_id:
         goals_collection = client.Goals
@@ -59,15 +62,13 @@ def get_goals(request: Request):
         return dumps(data)
     
 @router.post("/add_goal")
-async def add_goal(request : Request):
-    data = await request.json()
-    header_content = request.headers.get("Authorization")
-    token = header_content.split("Bearer")[1].strip()
+async def add_goal(token: str = Depends(oauth2_scheme_token)):
     user_id = get_current_user(token)
     if user_id:
+        data = {}
         data["goal_id"] = str(uuid.uuid4())
         data["user_id"] = user_id
-        data["icon"] = "test"
+        data["icon"] = "test" # gemini parsing 
         data["tasks"] = []
         data["ptvalue"] = 20
         goals_collection = client.Goals
@@ -82,23 +83,18 @@ async def add_goal(request : Request):
     
 
 @router.post("/modify_goal")
-async def modify_goal(request : Request):
-    data = await request.json()
-    header_content = request.headers.get("Authorization")
-    token = header_content.split("Bearer")[1].strip()
+async def modify_goal(request_body: GoalData, token: str = Depends(oauth2_scheme_token)):
     user_id = get_current_user(token)
     if user_id:
-        goal_id = data['goal_id']
-        goals_collection = client.Goals
-        result = goals_collection.update_one({"goal_id": goal_id}, {"$set": data})
-
+        goal_id = request_body.goal_id
+        result = goals_collection.update_one({"goal_id": goal_id}, {"$set": request_body.model_dump()})
         if result.modified_count == 1:
             return {"message": "Goal updated successfully"}
         else:
             return {"message": "Failed to update goal"}
         
 @router.post("/remove_goal")
-async def remove_goal(request : Request):
+async def remove_goal(request : Request, token: str = Depends(oauth2_scheme_token)):
     data = await request.json()
     header_content = request.headers.get("Authorization")
     token = header_content.split("Bearer")[1].strip()

@@ -12,7 +12,7 @@ auth_me_url = "http://127.0.0.1:8000/api/me"
 remove_goal_url = "http://127.0.0.1:8000/api/remove_goal"
 from pydantic import BaseModel
 
-valid_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjMzIyNTRmNi05NmU1LTQ3NzctOTM0Yy00MmVjMTdjMTYwODciLCJleHAiOjE3MDc1OTc2OTF9.kDTXbwexHG0H_WwQsKvYXSHwtBPpSKv8AiNaXmUr1Jc"
+valid_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjMzIyNTRmNi05NmU1LTQ3NzctOTM0Yy00MmVjMTdjMTYwODciLCJleHAiOjE3MTM1ODE1NjJ9.s_rjGjlQZmCPxVQBFC9HRwHcryWn7FOolU0kIHXLYTo"
 
 class RegisterData(BaseModel):
     name: str
@@ -51,11 +51,11 @@ def test_authenticated_user(payload):
 
 goal_data = {
     "name" :"yoikitenaki",
-    "goal_id" : "a40b5f75-2341-4dd5-8c71-c11fa0084449",
+    "goal_id" : "0137ac72-cdb6-4eae-b680-390696c9d0b4",
     "user_id" :"0a361b8c-2002-4e16-b06c-d02b21098ff4",
     "icon" : "test",    
     "tasks" : [],
-    "ptvalue" : 21
+    "ptvalue" : 24
 }
 
 def add_goal():
@@ -68,7 +68,7 @@ def add_goal():
 
 def modify_goal(new_data):
     token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwYTM2MWI4Yy0yMDAyLTRlMTYtYjA2Yy1kMDJiMjEwOThmZjQiLCJleHAiOjE3MDc1NjMyMTl9.IRPUpN6mQNGr0FXwpfon4__lNcGiRGuDNhodok2sY"
-    headers = {"Authorization": f"Bearer {token}"}
+    headers = {"Authorization": f"Bearer {valid_token}"}
 
     response = requests.post(modify_goal_url, json = new_data, headers = headers)
     print(response.content)
@@ -85,7 +85,7 @@ def test_auth_me():
     response = requests.get(auth_me_url, headers = headers)
     print(response.content)
 
-test_auth_me()
+modify_goal(goal_data)
 
 # login_user({
 #                "email" : "park123@gmail.com",
