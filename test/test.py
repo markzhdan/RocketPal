@@ -89,13 +89,13 @@ def test_auth_me():
 
 # remove_goal("a18f65be-79a1-48d6-ae7e-15e680165590")
 
-add_goal(new_goal_data)
+# add_goal(new_goal_data)
 
 # modify_goal(goal_data)
 
-# login_user({
-#                "email" : "park123@gmail.com",
-#                "password" : "yo123"})
+login_user({
+               "email" : "park123@gmail.com",
+               "password" : "yo123"})
 
 
 # print(LoginData.model_validate({"email" : "marker@gmail.com",
