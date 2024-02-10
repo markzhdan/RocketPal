@@ -22,7 +22,7 @@ const HomeRocket = () => {
     <main className="HomeRocket">
       <div className="Tracks">
         <section className="RocketTrack">
-          <img src={rocket} alt="Rocketship Animation" width={250} />
+          <img src={rocket} alt="Rocketship Animation" width={500} />
         </section>
         <section className="Planets">
           <div className="DottedPath"></div>
