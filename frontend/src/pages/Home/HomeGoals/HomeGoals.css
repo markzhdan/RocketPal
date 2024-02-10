@@ -17,10 +17,6 @@
   flex-direction: column;
   padding-bottom: 10px;
   padding-top: 10px;
-
-  * {
-    color: white;
-  }
 }
 .HomeGoals .Goal {
   width: 100%;
@@ -52,6 +48,7 @@
   font-size: 25px;
   font-weight: bold;
   padding: 0px 5px 0px 5px;
+  color: white;
 }
 
 /* Add hover effect for each task item */
@@ -72,76 +69,39 @@
   word-wrap: break-word; /* or overflow-wrap: break-word; for better support */
   transition: transform 0.3s, box-shadow 0.3s;
 }
-
-.TaskLabel {
+.HomeGoals .Goal-Heading {
   display: flex;
+  justify-content: space-between;
+  width: 60%;
   align-items: center;
 }
-
-.Checkbox {
-  margin-right: 10px; /* Adjust as needed */
-}
-
-.Checkmark {
-  position: relative;
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-}
-
-.Checkmark.cross:after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  transform: translate(-50%, -50%) rotate(45deg);
-  border: 2px solid #ccc;
-  border-top: none;
-  border-right: none;
-}
-
-.Checkbox.custom-checkbox {
-  position: relative;
-}
-
-.Checkbox.custom-checkbox input[type="checkbox"] {
-  opacity: 0;
-  position: absolute;
-  left: 0;
-}
-
-.Checkbox.custom-checkbox label {
-  position: relative;
-  padding-left: 25px;
+.HomeGoals svg {
+  color: white;
   cursor: pointer;
 }
 
-.Checkbox.custom-checkbox label:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  transform: translateY(-50%);
+.HomeGoals svg:focus,
+.HomeGoals svg:hover {
+  color: red;
+  outline: none;
 }
 
-.Checkbox.custom-checkbox input[type="checkbox"]:checked + label:before {
-  background-color: #ccc;
+.HomeGoals .Add-Container {
+  background-color: red;
+  gap: 10px;
+  padding: 60px 20px;
+  background-color: rgba(255, 255, 255, 0.2); /* 50% opacity white */
+  border-radius: 8px;
+  width: 59%;
+  margin-left: 9px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.Checkbox.custom-checkbox input[type="checkbox"]:checked + label:after {
-  content: "\00d7"; /* Unicode character for cross */
-  position: absolute;
-  left: 4px;
-  top: 3px;
-  color: #fff;
-  font-size: 12px;
+.HomeGoals .Add-Container svg:focus,
+.HomeGoals .Add-Container svg:hover {
+  color: green;
+  outline: none;
 }
-
