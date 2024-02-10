@@ -17,7 +17,13 @@ const planets = [
   { name: "Saturn", image: saturn, size: 200 },
 ];
 
-const HomeRocket = () => {
+const HomeRocket = ({ points, totalPoints }) => {
+  console.log(
+    "points: ",
+    (points / (totalPoints == 0 ? 1 : totalPoints)) * 100
+  );
+  console.log(points);
+  console.log(totalPoints);
   return (
     <main className="HomeRocket">
       <div className="Tracks">
@@ -48,7 +54,7 @@ const HomeRocket = () => {
             value: "text-foreground/60 ",
           }}
           label="Reach Home Base"
-          value={65}
+          value={(points / (totalPoints == 0 ? 1 : totalPoints)) * 100}
         />
       </div>
     </main>

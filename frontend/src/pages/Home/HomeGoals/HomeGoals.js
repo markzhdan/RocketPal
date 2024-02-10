@@ -7,7 +7,7 @@ import { IoIosAddCircle } from "react-icons/io";
 
 import { fetchWithToken } from "../../../features/api/api";
 
-const HomeGoals = () => {
+const HomeGoals = ({ points, setPoints, setTotalPoints }) => {
   const [goals, setGoals] = useState([]);
 
   const fetchGoals = async () => {
@@ -23,6 +23,32 @@ const HomeGoals = () => {
   useEffect(() => {
     fetchGoals();
   }, []);
+
+  useEffect(() => {
+    const totalPointsValue = goals.reduce((total, goal) => {
+      const goalPoints = goal.tasks.reduce(
+        (sum, task) => sum + task.pointsValue,
+        0
+      );
+      return total + goalPoints;
+    }, 1);
+
+    const totalPointsValueCompleted = goals.reduce((total, goal) => {
+      const goalPoints = goal.tasks.reduce((sum, task) => {
+        if (task.completed) {
+          return sum + task.pointsValue;
+        }
+        return sum;
+      }, 0);
+      return total + goalPoints;
+    }, 0);
+
+    setPoints(totalPointsValueCompleted);
+
+    setTotalPoints(totalPointsValue);
+  });
+
+  console.log("goals: ", goals);
 
   const [goalName, setGoalName] = useState("");
 
@@ -45,12 +71,25 @@ const HomeGoals = () => {
     }
   };
 
-  const handleDelete = async (goalId) => {
-    console.log("goal id: ", goalId);
+  const handleDelete = async (goal) => {
+    console.log("goal id: ", goal);
+
     try {
       await fetchWithToken("/remove_goal", "POST", {
-        goal_id: goalId,
+        goal_id: goal.goal_id,
       });
+
+      const totalPointsValueCompleted = goals.reduce((total, goal) => {
+        const goalPoints = goal.tasks.reduce((sum, task) => {
+          if (task.completed) {
+            return sum + task.pointsValue;
+          }
+          return sum;
+        }, 0);
+        return total + goalPoints;
+      }, 0);
+
+      setPoints(points - totalPointsValueCompleted);
 
       fetchGoals();
     } catch (error) {
@@ -58,24 +97,36 @@ const HomeGoals = () => {
     }
   };
 
-  const handleTaskClick = (goalName, taskName) => {
-    const updatedGoals = goals.map((goal) => {
-      if (goal.name === goalName) {
-        const updatedTasks = goal.tasks.map((task) => {
-          if (task.name === taskName) {
-            return { ...task, completed: !task.completed };
-          }
-          return task;
-        });
-
-        const isGoalCompleted = updatedTasks.every((task) => task.completed);
-
-        return { ...goal, tasks: updatedTasks, completed: isGoalCompleted };
+  function toggleTaskCompletion(goal, taskNameToToggle) {
+    const updatedTasks = goal.tasks.map((task) => {
+      if (task.name === taskNameToToggle) {
+        return { ...task, completed: !task.completed };
       }
-      return goal;
+      return task;
     });
 
-    setGoals(updatedGoals);
+    return {
+      ...goal,
+      tasks: updatedTasks,
+    };
+  }
+
+  const handleTaskClick = async (goal, task) => {
+    const updatedGoal = toggleTaskCompletion(goal, task.name);
+    delete updatedGoal["_id"];
+
+    try {
+      await fetchWithToken("/modify_goal", "POST", updatedGoal);
+      fetchGoals();
+    } catch (error) {
+      console.error("Error modifying new goal:", error);
+    }
+
+    if (task.completed) {
+      setPoints(points - task.pointsValue);
+    } else {
+      setPoints(points + task.pointsValue);
+    }
   };
 
   return (
@@ -88,7 +139,7 @@ const HomeGoals = () => {
               <div className="Goal-Heading">
                 <h2>{goal.name}</h2>
                 <FaTrash
-                  onClick={() => handleDelete(goal.goal_id)}
+                  onClick={() => handleDelete(goal)}
                   role="button"
                   tabIndex="0"
                 />
@@ -99,7 +150,7 @@ const HomeGoals = () => {
                     <Checkbox
                       color="success"
                       isSelected={task.completed}
-                      onChange={() => handleTaskClick(goal.name, task.name)}
+                      onChange={() => handleTaskClick(goal, task)}
                       lineThrough={task.completed}
                     >
                       {task.name}

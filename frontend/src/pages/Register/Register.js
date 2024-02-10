@@ -11,7 +11,7 @@ export default function Register() {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
 
@@ -19,15 +19,22 @@ export default function Register() {
 
   const handleFirstNameChange = (event) => setFirstName(event.target.value);
   const handleLastNameChange = (event) => setLastName(event.target.value);
-  const handleEmailChange = (event) => setUsername(event.target.value);
+  const handleEmailChange = (event) => setEmail(event.target.value);
   const handlePasswordChange = (event) => setPassword(event.target.value);
   const handlePasswordRepeatChange = (event) =>
     setPasswordRepeat(event.target.value);
 
   const registerUser = async (event) => {
+    event.preventDefault();
+    if (password !== passwordRepeat && password === "") {
+      setInvalidForm(true);
+      return;
+    }
+
     try {
-      const response = await fetchWithoutToken("/login", "POST", {
-        email: username,
+      const response = await fetchWithoutToken("/register", "POST", {
+        name: firstName,
+        email,
         password,
       });
 
@@ -38,7 +45,7 @@ export default function Register() {
       navigate("/home", { replace: true });
     } catch (err) {
       console.error("Authentication error:", err);
-      navigate("/login", { replace: true });
+      navigate("/", { replace: true });
     }
   };
 
@@ -113,7 +120,7 @@ export default function Register() {
           <div className="InvalidWarning">
             <p
               style={{
-                visibility: !invalidForm ? "visible" : "hidden",
+                visibility: invalidForm ? "visible" : "hidden",
                 color: "red",
               }}
             >
