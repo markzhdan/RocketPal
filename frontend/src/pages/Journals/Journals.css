@@ -1,0 +1,37 @@
+.journal-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+.journal {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.journal-content {
+  display: flex;
+}
+
+.sub-entries {
+  flex: 1;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.sub-container {
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.entries {
+  flex: 1;
+}
+.entry {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px; /* Add rounded corners */
+  margin-bottom: 10px;
+}
