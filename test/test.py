@@ -15,6 +15,8 @@ add_journal_url = "http://127.0.0.1:8000/api/add_journal"
 modify_journal_url = "http://127.0.0.1:8000/api/modify_journal"
 generate_response_url = "http://127.0.0.1:8000/api/generate_response"
 
+get_journals_url = "http://127.0.0.1:8000/api/get_journals"
+
 from pydantic import BaseModel
 
 valid_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjMzIyNTRmNi05NmU1LTQ3NzctOTM0Yy00MmVjMTdjMTYwODciLCJleHAiOjE3MDc3NjcyMTN9.D0pf6vGc9jirCJouDvEyU2InBtGeYnBHXSI8brduPR4"
@@ -118,30 +120,36 @@ def generate_response(text):
     headers = {"Authorization": f"Bearer {valid_token}"}
 
     response = requests.post(generate_response_url, json = text, headers = headers)
+    print(response.content)
 
+def get_journals():
+    headers = {"Authorization": f"Bearer {valid_token}"}
 
-goal_data = {
-  "goal_id": "5e8836fc-f1bc-487f-88c7-1037ce3b8b47",
-  "user_id": "c32254f6-96e5-4777-934c-42ec17c16087",
-  "tasks": [
-    {
-      "name": "Update online dating profile",
-      "completed": True,
-      "pointsValue": 10
-    },
-    {
-      "name": "Join a social club or group",
-      "completed": True,
-      "pointsValue": 10
-    },
-    {
-      "name": "Ask a friend to set you up on a date",
-      "completed": False,
-      "pointsValue": 10
-    }
-  ],
-  "ptvalue": 20
-}
+    response = requests.get(get_journals_url, headers = headers)
+    print(response.content)
+
+# goal_data = {
+#   "goal_id": "5e8836fc-f1bc-487f-88c7-1037ce3b8b47",
+#   "user_id": "c32254f6-96e5-4777-934c-42ec17c16087",
+#   "tasks": [
+#     {
+#       "name": "Update online dating profile",
+#       "completed": True,
+#       "pointsValue": 10
+#     },
+#     {
+#       "name": "Join a social club or group",
+#       "completed": True,
+#       "pointsValue": 10
+#     },
+#     {
+#       "name": "Ask a friend to set you up on a date",
+#       "completed": False,
+#       "pointsValue": 10
+#     }
+#   ],
+#   "ptvalue": 20
+# }
 
 # add_goal({"name" : "find a girlfriend"})
 
@@ -151,7 +159,8 @@ goal_data = {
 
 # add_goal(new_goal_data)
 
-modify_goal(goal_data)
+# modify_goal(goal_data)
+get_journals()
 
 # login_user({
 #                "email" : "park123@gmail.com",
