@@ -15,6 +15,9 @@ add_journal_url = "http://127.0.0.1:8000/api/add_journal"
 modify_journal_url = "http://127.0.0.1:8000/api/modify_journal"
 generate_response_url = "http://127.0.0.1:8000/api/generate_response"
 
+get_journals_url = "http://127.0.0.1:8000/api/get_journals"
+remove_journal_url = "http://127.0.0.1:8000/api/remove_journal"
+
 from pydantic import BaseModel
 
 valid_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjMzIyNTRmNi05NmU1LTQ3NzctOTM0Yy00MmVjMTdjMTYwODciLCJleHAiOjE3MDc3NjcyMTN9.D0pf6vGc9jirCJouDvEyU2InBtGeYnBHXSI8brduPR4"
@@ -118,10 +121,45 @@ def generate_response(text):
     headers = {"Authorization": f"Bearer {valid_token}"}
 
     response = requests.post(generate_response_url, json = text, headers = headers)
-    
+    print(response.content)
 
+def get_journals():
+    headers = {"Authorization": f"Bearer {valid_token}"}
 
-generate_response({"text" : "I am very stressed"})
+    response = requests.get(get_journals_url, headers = headers)
+    print(response.content)
+
+def remove_journal():
+    headers = {"Authorization": f"Bearer {valid_token}"}
+
+    response = requests.post(remove_journal_url, json = {"journal_id" : "123"}, headers = headers)
+    print(response.content)
+
+remove_journal()
+# goal_data = {
+#   "goal_id": "5e8836fc-f1bc-487f-88c7-1037ce3b8b47",
+#   "user_id": "c32254f6-96e5-4777-934c-42ec17c16087",
+#   "tasks": [
+#     {
+#       "name": "Update online dating profile",
+#       "completed": True,
+#       "pointsValue": 10
+#     },
+#     {
+#       "name": "Join a social club or group",
+#       "completed": True,
+#       "pointsValue": 10
+#     },
+#     {
+#       "name": "Ask a friend to set you up on a date",
+#       "completed": False,
+#       "pointsValue": 10
+#     }
+#   ],
+#   "ptvalue": 20
+# }
+
+# add_goal({"name" : "find a girlfriend"})
 
 # add_task({"name" : "drink juice", "goal_id" : "1c0d6409-1d11-47ae-ad57-67c96b76607a"})
 
@@ -130,7 +168,6 @@ generate_response({"text" : "I am very stressed"})
 # add_goal(new_goal_data)
 
 # modify_goal(goal_data)
-
 # login_user({
 #                "email" : "park123@gmail.com",
 #                "password" : "yo123"})

@@ -29,7 +29,12 @@ export default function Login() {
 
       if (!response) throw new Error("Failed to authenticate");
 
+      if (response.status_code == 401) {
+        throw new Error("Failed to authenticate");
+      }
+
       localStorage.setItem("rocketpal-token", response.access_token);
+
       setUser(response.user);
       navigate("/home", { replace: true });
     } catch (err) {

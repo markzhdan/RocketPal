@@ -17,12 +17,20 @@ const planets = [
   { name: "Saturn", image: saturn, size: 200 },
 ];
 
-const HomeRocket = () => {
+const HomeRocket = ({ points, totalPoints }) => {
+  const pointsRatio = points / (totalPoints == 0 ? 1 : totalPoints);
+  console.log(points);
+  console.log(totalPoints);
   return (
     <main className="HomeRocket">
       <div className="Tracks">
         <section className="RocketTrack">
-          <img src={rocket} alt="Rocketship Animation" width={500} />
+          <div
+            className="RocketTrackContainer"
+            style={{ height: pointsRatio == 0 ? 140 : pointsRatio * 808 }}
+          >
+            <img src={rocket} alt="Rocketship Animation" width={300} />
+          </div>
         </section>
         <section className="Planets">
           <div className="DottedPath"></div>
@@ -48,7 +56,7 @@ const HomeRocket = () => {
             value: "text-foreground/60 ",
           }}
           label="Reach Home Base"
-          value={65}
+          value={pointsRatio * 100}
         />
       </div>
     </main>

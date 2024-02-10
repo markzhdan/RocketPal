@@ -1,17 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Textarea } from "@nextui-org/react";
 import "./Journal.css";
 import { Button } from "@nextui-org/react";
+import { fetchWithToken } from "../../../features/api/api";
 
 const Journal = ({ content }) => {
   const { date } = useParams();
-  const [journal, setJournal] = useState({
-    journal_id: 1,
-    date: "2024-02-10",
-    content:
-      "Today was a productive day. I woke up early and went for a run in the park. The weather was chilly, but refreshing. Afterwards, I spent the morning working on my project, making significant progress. In the afternoon, I met up with a friend for coffee and had a great conversation. Overall, feeling accomplished and content.",
-  });
+  const [journal, setJournal] = useState({});
+
+  function findJournalById(journals, journalId) {
+    return journals.find((journal) => journal.journal_id === journalId);
+  }
+
+  const fetchEntries = async () => {
+    try {
+      const data = await fetchWithToken("/get_journals");
+      const jsonData = JSON.parse(data);
+      const journal = findJournalById(jsonData.journals, date);
+
+      setJournal(journal);
+      console.log("journal: ", journal);
+    } catch (error) {
+      console.error("Failed to fetch goals:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEntries();
+  }, []);
 
   return (
     <section className="Journal-Container">
@@ -26,7 +43,7 @@ const Journal = ({ content }) => {
             className="col-span-12 md:col-span-6 mb-6 md:mb-0"
             size="lg"
             radius="md"
-            defaultValue={content}
+            defaultValue={journal.content}
           />
         </div>
 
