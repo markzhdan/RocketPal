@@ -5,32 +5,33 @@ const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
   // has token ?!? this can be used to immeditelity direct to dashboard so you dont see the site
 
+  const fetchUserData = async () => {
+    const token = localStorage.getItem("rocketpal-token");
+    console.log("token: ", token);
+
+    if (!token) {
+      setUser(null);
+      return;
+    }
+    setIsAuthenticating(true);
+
+    // TODO: CHECK setuser in callback
+    try {
+      const response = await fetchWithToken("/me");
+      console.log("the resposne THING: ", response.user);
+      setUser(response.user);
+    } catch (error) {
+      console.log("Error fetching user data:", error);
+      setUser(null);
+    } finally {
+      setIsAuthenticating(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem("rocketpal-token");
-      console.log("token: ", token);
-
-      if (!token) {
-        setUser(null);
-        return;
-      }
-      setIsAuthenticating(true);
-      // TODO: CHECK setuser in callback
-      try {
-        const response = await fetchWithToken("/me");
-        console.log("the resposne THING: ", response.user);
-        setUser(response);
-      } catch (error) {
-        console.log("Error fetching user data:", error);
-        setUser(null);
-      } finally {
-        setIsAuthenticating(false);
-      }
-    };
-
     fetchUserData();
   }, []);
 

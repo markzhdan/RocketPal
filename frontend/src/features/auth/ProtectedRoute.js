@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../auth/UserContext";
 
@@ -8,15 +8,16 @@ const ProtectedRoute = ({ children }) => {
   const { user, isAuthenticating } = useUser();
 
   console.log("user: ", user);
+  console.log("auth: ", isAuthenticating);
 
   if (isAuthenticating) {
     return <LoginLoading />;
   }
 
-  //   if (!user) {
-  //     // Redirect to the login page if the user is not authenticated
-  //     return <Navigate to="/login" replace />;
-  //   }
+  if (!user) {
+    // Redirect to the login page if the user is not authenticated
+    return <Navigate to="/login" replace />;
+  }
 
   return children;
 };

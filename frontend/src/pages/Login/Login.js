@@ -20,19 +20,18 @@ export default function Login() {
   const handleEmailChange = (event) => setUsername(event.target.value);
   const handlePasswordChange = (event) => setPassword(event.target.value);
 
-  const fetchJWT = async () => {
+  const fetchJWT = async (event) => {
+    event.preventDefault();
     try {
       const response = await fetchWithoutToken("/login", "POST", {
         email: username,
         password,
       });
 
-      console.log("response: ", response);
-
       if (!response) throw new Error("Failed to authenticate");
 
       localStorage.setItem("rocketpal-token", response.access_token);
-      setUser(response);
+      setUser(response.user);
       navigate("/home", { replace: true });
     } catch (err) {
       console.error("Authentication error:", err);
