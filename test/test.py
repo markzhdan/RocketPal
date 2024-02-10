@@ -113,7 +113,8 @@ def modify_journal(modified_journal):
     response = requests.post(modify_journal_url, json = modified_journal, headers = headers)
     print(response.content)
 
-modify_journal(new_journal_data)
+add_goal({"name" : "Lose weight"})
+
 # add_task({"name" : "drink juice", "goal_id" : "1c0d6409-1d11-47ae-ad57-67c96b76607a"})
 
 # remove_goal("a18f65be-79a1-48d6-ae7e-15e680165590")

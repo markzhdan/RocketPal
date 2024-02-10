@@ -55,7 +55,6 @@ async def register_user(form_data: RegisterData):
     email = form_data.email
     password = form_data.password
     hashed_password = get_password_hash(password)
-    print(name)
     # Check if user already exists 
     existing_user = users_collection.find_one({"email": email})
     if existing_user:

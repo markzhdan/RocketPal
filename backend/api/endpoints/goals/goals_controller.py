@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from api.models.goal import GoalData, NewGoalData, RemoveGoalData
 import os
 from db.db import Database
+from ai import gen_tasks
 
 # Load environment variables from .env file
 load_dotenv()
@@ -63,9 +64,9 @@ async def add_goal(request_body : NewGoalData, token: str = Depends(oauth2_schem
         data = {}
         data['name'] = request_body.name
         data["goal_id"] = str(uuid.uuid4())
-        data["user_id"] = user_id
-        data["icon"] = "test" # gemini parsing 
-        data["tasks"] = []
+        data["user_id"] = user_id 
+        tasks = gen_tasks(request_body.name)
+        data["tasks"] = tasks
         data["ptvalue"] = 20
         goals_collection = client.Goals
         result = goals_collection.insert_one(data)
