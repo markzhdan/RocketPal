@@ -14,17 +14,17 @@ import { Button } from "@nextui-org/react";
 const HomeTalks = () => {
   const [entry, setEntries] = useState([
     {
-      journal_id: "1",
+      journal_id: "2",
       date: "2024-02-10",
       content:
-        "Today was a productive day. I like monkeys. The weather was chilly, but refreshing. Afterwards, I spent the morning working on my project, making significant progress. In the afternoon, I met up with a friend for coffee and had a great conversation. Overall, feeling accomplished and content.",
+        "Today was a productive day The weather was chilly, but refreshing. Afterwards, I spent the morning working on my project, making significant progress. In the afternoon, I met up with a friend for coffee and had a great conversation. Overall, feeling accomplished and content.",
     },
   ]);
 
   return (
     <main className="HomeTalks">
       <div className="Main-Container">
-        <h1>Most Recent Journal</h1>
+        <h1>Recent Journals</h1>
         <section className="Journal-Contain">
           <div className="Recent-Journal">
             {entry.map((entry) => (
@@ -53,9 +53,15 @@ const HomeTalks = () => {
           </div>
         </section>
         <div className="x`button">
-          <Button color="default" size="lg" width="100px;">
-            Button
-          </Button>
+          <Link
+            to={`/journals`}
+            key={entry.journal_id}
+            className="Edit-Journal"
+          >
+            <Button color="default" size="lg" width="100px;">
+              See all journals
+            </Button>
+          </Link>
         </div>
       </div>
     </main>

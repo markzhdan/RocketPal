@@ -27,11 +27,6 @@ const RocketNavbar = () => {
               Journals
             </Link>
           </NavbarItem>
-          <NavbarItem isActive>
-            <Link color="foreground" href="/therapist">
-              Therapist
-            </Link>
-          </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">

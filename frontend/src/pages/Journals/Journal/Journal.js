@@ -44,6 +44,7 @@ const Journal = ({ content }) => {
             size="lg"
             radius="md"
             defaultValue={journal.content}
+            value={journal.content}
           />
         </div>
 
