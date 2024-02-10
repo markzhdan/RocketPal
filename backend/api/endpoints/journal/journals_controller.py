@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordBearer
-from api.models.journal import JournalData
+from api.models.journal import JournalData, RemoveJournalData
 from db.db import Database
 from api.endpoints.helper import get_current_user
 from bson.json_util import dumps
@@ -42,7 +42,7 @@ def add_journal(request_body : JournalData, token: str = Depends(oauth2_scheme_t
             return {"message": "Goal not added, error", "status_code" : 500}
 
 @router.post("/modify_journal")
-async def modify_goal(request_body: JournalData, token: str = Depends(oauth2_scheme_token)):
+async def modify_journal(request_body: JournalData, token: str = Depends(oauth2_scheme_token)):
     user_id = get_current_user(token)
     if user_id:
         journal_id = request_body.journal_id
@@ -51,3 +51,16 @@ async def modify_goal(request_body: JournalData, token: str = Depends(oauth2_sch
             return {"message": "Journal updated successfully", "status_code" : 200}
         else:
             return {"message": "Failed to update journal", "status_code" : 500}
+        
+@router.post("/remove_journal")
+async def remove_journal(request_body : RemoveJournalData, token: str = Depends(oauth2_scheme_token)):
+    user_id = get_current_user(token)
+    if user_id:
+        journal_id = request_body.journal_id
+        result = journal_collection.delete_one({"journal_id": journal_id})
+        if result.deleted_count == 1:
+            return {"message": "Journal deleted successfully", "status_code" : 200}
+        else:
+            return {"message": "Journal not found", "status_code" : 500}
+    else:
+        return {"message": "Journal could not be deleted", "status_code" : 500}

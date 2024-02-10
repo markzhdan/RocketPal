@@ -5,3 +5,6 @@ class JournalData(BaseModel):
     date : str
     content : str
 
+
+class RemoveJournalData(BaseModel):
+    journal_id : str

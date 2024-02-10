@@ -16,6 +16,7 @@ modify_journal_url = "http://127.0.0.1:8000/api/modify_journal"
 generate_response_url = "http://127.0.0.1:8000/api/generate_response"
 
 get_journals_url = "http://127.0.0.1:8000/api/get_journals"
+remove_journal_url = "http://127.0.0.1:8000/api/remove_journal"
 
 from pydantic import BaseModel
 
@@ -128,6 +129,13 @@ def get_journals():
     response = requests.get(get_journals_url, headers = headers)
     print(response.content)
 
+def remove_journal():
+    headers = {"Authorization": f"Bearer {valid_token}"}
+
+    response = requests.post(remove_journal_url, json = {"journal_id" : "123"}, headers = headers)
+    print(response.content)
+
+remove_journal()
 # goal_data = {
 #   "goal_id": "5e8836fc-f1bc-487f-88c7-1037ce3b8b47",
 #   "user_id": "c32254f6-96e5-4777-934c-42ec17c16087",
@@ -160,8 +168,6 @@ def get_journals():
 # add_goal(new_goal_data)
 
 # modify_goal(goal_data)
-get_journals()
-
 # login_user({
 #                "email" : "park123@gmail.com",
 #                "password" : "yo123"})
