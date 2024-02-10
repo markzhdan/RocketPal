@@ -6,7 +6,8 @@ import Navbar from "./components/navbar/Navbar";
 
 import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
-import Journal from "./pages/Journal/Journal";
+import Journals from "./pages/Journals/Journals";
+import Journal from "./pages/Journals/Journal/Journal";
 import Therapist from "./pages/Therapist/Therapist";
 
 import Missing from "./pages/Missing/Missing";
@@ -21,7 +22,8 @@ function App() {
 
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/journal" element={<Journal />} />
+          <Route path="/journals" element={<Journals />} />
+          <Route path="/journal/:data" element={<Journal />} />
           <Route path="/therapist" element={<Therapist />} />
 
           <Route path="*" element={<Missing />} />
