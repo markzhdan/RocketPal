@@ -115,7 +115,11 @@ def get_user_by_id(user_id: str):
 async def verify_user(token: str = Depends(oauth2_scheme_token)):
     user_id = get_current_user(token)
     user = get_user_by_id(user_id)
+    user_data = {
+        "name" : user['name'],
+        "email" : user['email'],
+    }
     if user:
-        return {"user" : user, "status_code" : status.HTTP_200_OK}
+        return {"user" : user_data, "status_code" : status.HTTP_200_OK}
     else:
         return {"user" : None, "status_code" : status.HTTP_401_UNAUTHORIZED}
