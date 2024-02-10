@@ -17,6 +17,18 @@
   width: 50%;
   height: 100%;
   border: 2px solid green;
+
+  position: relative;
+}
+
+.HomeRocket .Planets .DottedPath {
+  position: absolute;
+  left: 90px;
+  top: 40px;
+  width: 10px;
+  height: 85%;
+  border-left: 10px dashed white;
+  z-index: -10;
 }
 
 .HomeRocket .ProgressBar {

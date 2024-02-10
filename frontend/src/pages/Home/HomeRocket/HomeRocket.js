@@ -2,16 +2,18 @@ import React from "react";
 import "./HomeRocket.css";
 
 import earth from "../../../assets/planets/earth.gif";
-import jupiter from "../../../assets/planets/jupiter.png";
+import sun from "../../../assets/planets/sun.gif";
+import venus from "../../../assets/planets/venus.gif";
 import saturn from "../../../assets/planets/saturn-animated.gif";
 
-// import rocket from "../../../assets/rocket2.gif";
+import rocket from "../../../assets/rocket4.gif";
 
 import { Progress } from "@nextui-org/react";
 
 const planets = [
+  { name: "Sun", image: sun, size: 200 },
   { name: "Earth", image: earth, size: 200 },
-  { name: "Jupiter", image: jupiter, size: 100 },
+  { name: "Venus", image: venus, size: 200 },
   { name: "Saturn", image: saturn, size: 200 },
 ];
 
@@ -20,9 +22,10 @@ const HomeRocket = () => {
     <main className="HomeRocket">
       <div className="Tracks">
         <section className="RocketTrack">
-          {/* <img src={rocket} alt="Rocketship Animation" width={150} /> */}
+          <img src={rocket} alt="Rocketship Animation" width={250} />
         </section>
         <section className="Planets">
+          <div className="DottedPath"></div>
           {planets.map((planet) => (
             <img
               src={planet.image}
@@ -44,7 +47,7 @@ const HomeRocket = () => {
             label: "tracking-wider font-medium text-white-500",
             value: "text-foreground/60 ",
           }}
-          label="Lose weight"
+          label="Reach Home Base"
           value={65}
         />
       </div>

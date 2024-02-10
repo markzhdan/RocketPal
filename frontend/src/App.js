@@ -5,6 +5,7 @@ import Frontpage from "./pages/Frontpage/Frontpage";
 import RocketNavbar from "./components/navbar/Navbar";
 
 import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
 import Profile from "./pages/Profile/Profile";
 import Journals from "./pages/Journals/Journals";
 import Journal from "./pages/Journals/Journal/Journal";
@@ -19,6 +20,8 @@ function App() {
         <RocketNavbar />
         <Routes>
           <Route exact path="/" element={<Frontpage />} />
+
+          <Route path="/login" element={<Login />} />
 
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />

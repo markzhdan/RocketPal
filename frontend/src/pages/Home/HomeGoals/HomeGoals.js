@@ -78,6 +78,17 @@ const HomeGoals = () => {
       ],
     },
   ]);
+  const [goalName, setGoalName] = useState("");
+
+  const handleChange = (event) => {
+    setGoalName(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevents the default form submit action
+    alert("A name was submitted: " + goalName);
+    // Here you can also call an API to submit the form data
+  };
 
   const handleDelete = (goalName) => {
     const updatedGoals = goals.filter((goal) => goal.name !== goalName);
@@ -149,10 +160,11 @@ const HomeGoals = () => {
               classNames={{
                 input: ["placeholder:text-black"],
               }}
+              onChange={handleChange}
             />
             <IoIosAddCircle
               style={{ fontSize: "40px" }}
-              onClick={() => handGoalClick(goalName)}
+              onClick={handleSubmit}
             />
           </div>
         </div>

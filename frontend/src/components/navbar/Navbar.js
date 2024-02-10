@@ -14,12 +14,12 @@ import Logo from "../Logo/Logo";
 const RocketNavbar = () => {
   return (
     <nav className="RocketNavbar">
-      <Navbar>
+      <Navbar className="flex justify-evenly w-full">
         <NavbarBrand>
           <Logo />
           <h1 className="font-bold text-inherit">RocketPal</h1>
         </NavbarBrand>
-        <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarContent className="hidden sm:flex gap-8" justify="center">
           <NavbarItem isActive={false}>
             <Link color="foreground" href="/journals">
               Journals
