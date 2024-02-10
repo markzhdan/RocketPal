@@ -1,4 +1,74 @@
 .HomeGoals {
   flex-basis: 33.33%;
-  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 10px;
+}
+
+.HomeGoals .Head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.HomeGoals .Goals {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+  padding-top: 10px;
+
+  * {
+    color: white;
+  }
+}
+.HomeGoals .Goal {
+  width: 100%;
+  padding: 5px;
+  padding-bottom: 5px;
+  font-size: 25px;
+  font-weight: bold;
+  color: black;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+  margin-left: 5px;
+}
+
+.HomeGoals h1 {
+  padding: 20px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.HomeGoals .Tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.HomeGoals h2 {
+  font-size: 25px;
+  font-weight: bold;
+  padding: 0px 5px 0px 5px;
+}
+
+/* Add hover effect for each task item */
+.HomeGoals .Task:hover {
+  transform: scale(1.1); /* Increase size on hover */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Add shadow on hover */
+}
+
+.HomeGoals .Task {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 9px;
+  background-color: rgba(255, 255, 255, 0.2); /* 50% opacity white */
+  border-radius: 8px;
+  width: 60%;
+  white-space: normal; /* or white-space: pre-wrap; depending on your requirement */
+  word-wrap: break-word; /* or overflow-wrap: break-word; for better support */
+  transition: transform 0.3s, box-shadow 0.3s;
 }
