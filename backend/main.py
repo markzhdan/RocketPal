@@ -3,6 +3,8 @@ from api.endpoints.auth.auth_router import router as auth_router
 from api.endpoints.goals.goals_router import router as goals_router
 from api.endpoints.tasks.tasks_router import router as tasks_router
 from api.endpoints.journal.journals_router import router as journals_router
+from api.endpoints.ai.ai_router import router as ai_router
+
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -21,3 +23,4 @@ app.include_router(auth_router, tags=["auth"])
 app.include_router(goals_router, tags = ["goals"])
 app.include_router(tasks_router, tags = ["tasks"])
 app.include_router(journals_router, tags = ["journal"])
+app.include_router(ai_router, tags = ["ai"])

@@ -18,7 +18,8 @@ the following JSON format:
     day. Remove trailing quotes.
 """
 
-generate_response_prompt = """I am going to ask you certain mental health questions, respond to them with potential solutions."""
+generate_response_prompt = """I am going to ask you certain mental health questions, respond to them with potential solutions. Your 
+response doesn't have to be perfect, just give me anything."""
 
 def gen_tasks(goal_name) -> list:
     complete_prompt = goal_name + generate_tasks_prompt
@@ -26,10 +27,9 @@ def gen_tasks(goal_name) -> list:
     return json.loads(tasks_str.parts[0].text)
 
 def gen_response(text):
-    if text.startswith("""I am going to ask you certain mental health questions, respond to them with potential solutions."""):
+    if text.startswith(generate_response_prompt):
         response = model.generate_content(text, generation_config=generation_config)
         return response.parts[0].text
     else:
-        print(generate_response_prompt + " " + text)
         response = model.generate_content(generate_response_prompt + " " + text, generation_config=generation_config)
         return response.parts[0].text

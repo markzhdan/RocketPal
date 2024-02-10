@@ -13,6 +13,7 @@ remove_goal_url = "http://127.0.0.1:8000/api/remove_goal"
 add_task_url = "http://127.0.0.1:8000/api/add_task"
 add_journal_url = "http://127.0.0.1:8000/api/add_journal"
 modify_journal_url = "http://127.0.0.1:8000/api/modify_journal"
+generate_response_url = "http://127.0.0.1:8000/api/generate_response"
 
 from pydantic import BaseModel
 
@@ -113,7 +114,14 @@ def modify_journal(modified_journal):
     response = requests.post(modify_journal_url, json = modified_journal, headers = headers)
     print(response.content)
 
-add_goal({"name" : "Lose weight"})
+def generate_response(text):
+    headers = {"Authorization": f"Bearer {valid_token}"}
+
+    response = requests.post(generate_response_url, json = text, headers = headers)
+    
+
+
+generate_response({"text" : "I am very stressed"})
 
 # add_task({"name" : "drink juice", "goal_id" : "1c0d6409-1d11-47ae-ad57-67c96b76607a"})
 
