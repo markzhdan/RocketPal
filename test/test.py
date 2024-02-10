@@ -11,6 +11,8 @@ modify_goal_url = "http://127.0.0.1:8000/api/modify_goal"
 auth_me_url = "http://127.0.0.1:8000/api/me"
 remove_goal_url = "http://127.0.0.1:8000/api/remove_goal"
 add_task_url = "http://127.0.0.1:8000/api/add_task"
+add_journal_url = "http://127.0.0.1:8000/api/add_journal"
+modify_journal_url = "http://127.0.0.1:8000/api/modify_journal"
 
 from pydantic import BaseModel
 
@@ -63,12 +65,17 @@ new_goal_data = {
     "name" :"yoikitenaki",
 }
 
+new_journal_data = {
+    "journal_id" : "123",
+    "date" : "05/25/34",
+    "content" : "yo im a bitch nvm i a12int"
+}
+
 def add_goal(goal_data):
     headers = {"Authorization": f"Bearer {valid_token}"}
 
     response = requests.post(add_goal_url, json = goal_data, headers = headers)
     print(response.content)
-
 
 def modify_goal(new_data):
     token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwYTM2MWI4Yy0yMDAyLTRlMTYtYjA2Yy1kMDJiMjEwOThmZjQiLCJleHAiOjE3MDc1NjMyMTl9.IRPUpN6mQNGr0FXwpfon4__lNcGiRGuDNhodok2sY"
@@ -94,6 +101,19 @@ def add_task(new_task):
     response = requests.post(add_task_url, json = new_task, headers = headers)
     print(response.content)
 
+def add_journal(new_journal):
+    headers = {"Authorization": f"Bearer {valid_token}"}
+
+    response = requests.post(add_journal_url, json = new_journal, headers = headers)
+    print(response.content)
+
+def modify_journal(modified_journal):
+    headers = {"Authorization": f"Bearer {valid_token}"}
+
+    response = requests.post(modify_journal_url, json = modified_journal, headers = headers)
+    print(response.content)
+
+modify_journal(new_journal_data)
 # add_task({"name" : "drink juice", "goal_id" : "1c0d6409-1d11-47ae-ad57-67c96b76607a"})
 
 # remove_goal("a18f65be-79a1-48d6-ae7e-15e680165590")
