@@ -1,66 +1,51 @@
 import React, { useState, useEffect } from "react";
 import "./Journals.css";
-import { Checkbox } from "@nextui-org/react";
-import { FaBlackTie, FaTrashCan } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa";
 import { Input } from "@nextui-org/react";
 import { IoIosAddCircle } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaPencilAlt } from "react-icons/fa";
+import { fetchWithToken } from "../../features/api/api";
+import { useNavigate } from "react-router-dom";
 
 const Journals = () => {
   const [selectedEntryContent, setSelectedEntryContent] = useState("");
-  const [entry, setEntries] = useState([
-    {
-      journal_id: "1",
-      date: "2024-02-10",
-      content:
-        "Today was a productive day. I woke up early and went for a run in the park. The weather was chilly, but refreshing. Afterwards, I spent the morning working on my project, making significant progress. In the afternoon, I met up with a friend for coffee and had a great conversation. Overall, feeling accomplished and content.",
-    },
-    {
-      journal_id: "2",
-      date: "2024-02-09",
-      content:
-        "Spent the day indoors due to heavy rain. Despite the gloomy weather, I managed to catch up on some reading and watched a few episodes of my favorite TV show. Feeling relaxed and rejuvenated.",
-    },
-    {
-      journal_id: "3",
-      date: "2024-02-08",
-      content:
-        "Attended a workshop on mindfulness and meditation today. It was enlightening to learn new techniques for managing stress and improving focus. I'm determined to incorporate these practices into my daily routine.",
-    },
-    {
-      journal_id: "4",
-      date: "2024-02-10",
-      content:
-        "Today was a productive day. I woke up early and went for a run in the park. The weather was chilly, but refreshing. Afterwards, I spent the morning working on my project, making significant progress. In the afternoon, I met up with a friend for coffee and had a great conversation. Overall, feeling accomplished and content.",
-    },
-    {
-      journal_id: "5",
-      date: "2024-02-09",
-      content:
-        "Spent the day indoors due to heavy rain. Despite the gloomy weather, I managed to catch up on some reading and watched a few episodes of my favorite TV show. Feeling relaxed and rejuvenated.",
-    },
-    {
-      journal_id: "6",
-      date: "2024-02-08",
-      content:
-        "Attended a workshop on mindfulness and meditation today. It was enlightening to learn new techniques for managing stress and improving focus. I'm determined to incorporate these practices into my daily routine.",
-    },
-  ]);
+  const [entry, setEntries] = useState([]);
+  const navigate = useNavigate();
+
+  const fetchEntries = async () => {
+    try {
+      const data = await fetchWithToken("/get_journals");
+      const jsonData = JSON.parse(data);
+      setEntries(jsonData.journals);
+    } catch (error) {
+      console.error("Failed to fetch goals:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEntries();
+  }, []);
 
   const handleEdit = (content) => {
     setSelectedEntryContent(content);
   };
 
-  const handleAddEntry = () => {
+  const handleAddEntry = async () => {
     const newEntry = {
-      journal_id: parseInt(entry.length + 1),
+      journal_id: "" + parseInt(entry.length + 1),
       date: new Date().toISOString().slice(0, 10),
-      content: "Click to pen to edit...", // You can customize this
+      content: "Click to pen to edit...",
     };
-    setEntries([...entry, newEntry]);
+
+    try {
+      await fetchWithToken("/add_journal", "POST", newEntry);
+    } catch (error) {
+      console.error("Error modifying new goal:", error);
+    }
+
+    navigate(`/journal/${newEntry.journal_id}`);
   };
 
   const handleDelete = (entryId) => {
@@ -84,34 +69,36 @@ const Journals = () => {
               onClick={handleAddEntry}
             />
           </div>
-          {entry.map((entry) => (
-            <div
-              className="Journal-Entry"
-              key={entry.journal_id}
-              // onClick={() => redirectToJournalPage(entry.entry_id)}
-            >
-              <div className="Journal-Headers">
-                <h2>{entry.date}</h2>
-                <div className="icons">
-                  <Link
-                    to={`/journal/${entry.journal_id}`}
-                    key={entry.journal_id}
-                    className="Edit-Journal"
-                  >
-                    <FaPencilAlt />
-                  </Link>
-                  <FaTrash
-                    onClick={() => handleDelete(entry.journal_id)}
-                    role="button"
-                    tabIndex="0"
-                  />
+          {entry && entry.length !== 0
+            ? entry.map((entry) => (
+                <div
+                  className="Journal-Entry"
+                  key={entry.journal_id}
+                  // onClick={() => redirectToJournalPage(entry.entry_id)}
+                >
+                  <div className="Journal-Headers">
+                    <h2>{entry.date}</h2>
+                    <div className="icons">
+                      <Link
+                        to={`/journal/${entry.journal_id}`}
+                        key={entry.journal_id}
+                        className="Edit-Journal"
+                      >
+                        <FaPencilAlt />
+                      </Link>
+                      <FaTrash
+                        onClick={() => handleDelete(entry.journal_id)}
+                        role="button"
+                        tabIndex="0"
+                      />
+                    </div>
+                  </div>
+                  <div className="Content">
+                    <p>{entry.content.substring(0, 250) + "..."}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="Content">
-                <p>{entry.content.substring(0, 250) + "..."}</p>
-              </div>
-            </div>
-          ))}
+              ))
+            : null}
         </section>
       </main>
     </div>
