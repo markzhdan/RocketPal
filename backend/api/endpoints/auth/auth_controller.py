@@ -82,7 +82,11 @@ async def login_for_access_token(form_data: LoginData):
     access_token = create_access_token(
         data={"sub": user["user_id"]}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "user" : user, "token_type": "bearer"}
+    user_data = {
+        "name" : user['name'],
+        "email" : user['email'],
+    }
+    return {"access_token": access_token, "user" : user_data, "token_type": "bearer"}
 
 def get_current_user(token: str = Depends(oauth2_scheme_token)):
     try:

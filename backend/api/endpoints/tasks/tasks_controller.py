@@ -63,3 +63,24 @@ def add_task(request_body : NewTaskData, token: str = Depends(oauth2_scheme_toke
             return {"message" : "Task added successfully", "status_code" : 200}
         else:
             return {"message" : "Somethingw ent wrong", "status_code" : 401}
+        
+# @router.post("/")
+# def add_task(request_body : NewTaskData, token: str = Depends(oauth2_scheme_token)):
+#     user_id = get_current_user(token)
+#     if user_id:
+#         goals_collection = client.Goals
+#         task_name = request_body.name
+#         goal_id = request_body.goal_id
+#         goal = goals_collection.find_one({"goal_id": goal_id})
+#         if goal:
+#             data = {
+#                 "name" : task_name,
+#                 "completed" : False,
+#                 "pointsValue" : 10
+#             }
+#             goal['tasks'].append(data)
+#             print(goal['tasks'])
+#             goals_collection.update_one({"goal_id": goal_id}, {"$set": goal})
+#             return {"message" : "Task added successfully", "status_code" : 200}
+#         else:
+#             return {"message" : "Somethingw ent wrong", "status_code" : 401}

@@ -14,7 +14,7 @@ add_task_url = "http://127.0.0.1:8000/api/add_task"
 
 from pydantic import BaseModel
 
-valid_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjMzIyNTRmNi05NmU1LTQ3NzctOTM0Yy00MmVjMTdjMTYwODciLCJleHAiOjE3MTM1ODM3MTJ9.GOuFYZKaaVUlsKLXrpwcdRz15OmuGMZB1XZtAfWf2F0"
+valid_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjMzIyNTRmNi05NmU1LTQ3NzctOTM0Yy00MmVjMTdjMTYwODciLCJleHAiOjE3MDc3NjcyMTN9.D0pf6vGc9jirCJouDvEyU2InBtGeYnBHXSI8brduPR4"
 
 class RegisterData(BaseModel):
     name: str
@@ -40,7 +40,6 @@ def register_user(payload):
 
 def login_user(payload):
     response = requests.post(login_url, json = payload)
-    print(response.json()['access_token'])
     return response.json()['access_token']
 
 def test_authenticated_user(payload):
@@ -95,7 +94,7 @@ def add_task(new_task):
     response = requests.post(add_task_url, json = new_task, headers = headers)
     print(response.content)
 
-add_task({"name" : "drink juice", "goal_id" : "1c0d6409-1d11-47ae-ad57-67c96b76607a"})
+# add_task({"name" : "drink juice", "goal_id" : "1c0d6409-1d11-47ae-ad57-67c96b76607a"})
 
 # remove_goal("a18f65be-79a1-48d6-ae7e-15e680165590")
 
