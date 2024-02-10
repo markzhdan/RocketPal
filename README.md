@@ -28,11 +28,16 @@ Watch as your rocket moves closer to the stars with each completed task. Visuali
 ***Installation***
 Clone the repository: git clone https://github.com/markzhdan/RocketPal.git
 In the root directory:
-1. npm i concurrently
+1. cd RocketPal
+2. npm i concurrently
 2. cd backend
 3. pip install -r requirements.txt
-4. npm run start
-5. Open http://localhost:3000
+4. cd ..
+5. cd frontend
+6. npm i
+7. cd ..
+9. npm run start
+10. Open http://localhost:3000
 
 To log in, use demo account: 
 
