@@ -31,7 +31,7 @@ const Journal = ({ content }) => {
         </div>
 
         <div className="Save-Container">
-          <Button color="default">Button</Button>
+          <Button color="default">Save</Button>
           <Button color="default">Discard</Button>
         </div>
       </div>
