@@ -9,6 +9,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaPencilAlt } from "react-icons/fa";
+import { Button } from "@nextui-org/react";
 
 const HomeTalks = () => {
   const [entry, setEntries] = useState([
@@ -23,6 +24,7 @@ const HomeTalks = () => {
   return (
     <main className="HomeTalks">
       <div className="Main-Container">
+        <h1>Most Recent Journal</h1>
         <section className="Journal-Contain">
           <div className="Recent-Journal">
             {entry.map((entry) => (
@@ -44,12 +46,17 @@ const HomeTalks = () => {
                   </div>
                 </div>
                 <div className="Content">
-                  <p>{entry.content.substring(0, 250) + "..."}</p>
+                  <p>{entry.content.substring(0, 350) + "..."}</p>
                 </div>
               </div>
             ))}
           </div>
         </section>
+        <div class="butt">
+          <Button color="default" size="lg" width="100px;">
+            Button
+          </Button>
+        </div>
       </div>
     </main>
   );
