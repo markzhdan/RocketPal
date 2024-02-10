@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Frontpage from "./pages/Frontpage/Frontpage";
-import Navbar from "./components/navbar/Navbar";
+import RocketNavbar from "./components/navbar/Navbar";
 
 import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar />
+        <RocketNavbar />
         <Routes>
           <Route exact path="/" element={<Frontpage />} />
 

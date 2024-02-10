@@ -1,4 +1,10 @@
 .App {
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
+
+  background: url("./assets/sparkle-65.gif");
+  background-size: 15%;
 }
