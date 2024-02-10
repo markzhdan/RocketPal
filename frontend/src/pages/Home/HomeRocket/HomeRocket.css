@@ -1,6 +1,5 @@
 .HomeRocket {
   flex-basis: 33.33%;
-  border: 1px solid purple;
   display: flex;
   flex-direction: column;
 }
@@ -16,7 +15,6 @@
 .HomeRocket .Planets {
   width: 50%;
   height: 100%;
-  border: 2px solid green;
 
   position: relative;
 }
