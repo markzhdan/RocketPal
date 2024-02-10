@@ -52,7 +52,7 @@ const HomeTalks = () => {
             ))}
           </div>
         </section>
-        <div class="butt">
+        <div className="x`button">
           <Button color="default" size="lg" width="100px;">
             Button
           </Button>

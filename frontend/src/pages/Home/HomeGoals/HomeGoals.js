@@ -80,7 +80,7 @@ const HomeGoals = () => {
 
   return (
     <main className="HomeGoals">
-      <h1 className="Head">Goals</h1>
+      <h1 className="Head"> Your Goals</h1>
       <section className="Goals">
         <div className="goal-container">
           {goals.map((goal) => (

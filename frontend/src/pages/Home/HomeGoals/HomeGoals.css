@@ -10,6 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 38px;
 }
 
 .HomeGoals .Goals {
@@ -17,6 +18,7 @@
   flex-direction: column;
   padding-bottom: 10px;
   padding-top: 10px;
+  align-self: center;
 }
 .HomeGoals .Goal {
   width: 100%;
@@ -64,7 +66,7 @@
   padding: 9px;
   background-color: rgba(255, 255, 255, 0.2); /* 50% opacity white */
   border-radius: 8px;
-  width: 60%;
+  width: 100%;
   white-space: normal; /* or white-space: pre-wrap; depending on your requirement */
   word-wrap: break-word; /* or overflow-wrap: break-word; for better support */
   transition: transform 0.3s, box-shadow 0.3s;
@@ -72,7 +74,7 @@
 .HomeGoals .Goal-Heading {
   display: flex;
   justify-content: space-between;
-  width: 60%;
+  width: 100%;
   align-items: center;
 }
 .HomeGoals svg {
@@ -92,7 +94,7 @@
   padding: 60px 20px;
   background-color: rgba(255, 255, 255, 0.2); /* 50% opacity white */
   border-radius: 8px;
-  width: 59%;
+  width: 100%;
   margin-left: 9px;
   margin-top: 5px;
   display: flex;
