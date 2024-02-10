@@ -1,98 +1,61 @@
 import React, { useState, useEffect } from "react";
 import "./HomeGoals.css";
 import { Checkbox } from "@nextui-org/react";
-import { FaBlackTie, FaTrashCan } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa";
 import { Input } from "@nextui-org/react";
 import { IoIosAddCircle } from "react-icons/io";
 
+import { fetchWithToken } from "../../../features/api/api";
+
 const HomeGoals = () => {
-  const [goals, setGoals] = useState([
-    {
-      name: "Stay Healthy",
-      completed: false,
-      pointsValue: 20,
-      icon: "healthIcon",
-      tasks: [
-        {
-          name: "Drink Water",
-          completed: false,
-          pointsValue: 5,
-        },
-        {
-          name: "Go To The Gym",
-          completed: false,
-          pointsValue: 5,
-        },
-        {
-          name: "Drink Waters",
-          completed: false,
-          pointsValue: 5,
-        },
-      ],
-    },
-    {
-      name: "Be good at running",
-      completed: false,
-      pointsValue: 20,
-      icon: "healthIcon",
-      tasks: [
-        {
-          name: "Drink Water2",
-          completed: false,
-          pointsValue: 5,
-        },
-        {
-          name: "Go To The Gym3",
-          completed: false,
-          pointsValue: 5,
-        },
-        {
-          name: "Drink Watssssssss ssssssssssssser",
-          completed: false,
-          pointsValue: 5,
-        },
-      ],
-    },
-    {
-      name: "Be good at Fortnite",
-      completed: false,
-      pointsValue: 20,
-      icon: "healthIcon",
-      tasks: [
-        {
-          name: "Drink Water6",
-          completed: false,
-          pointsValue: 5,
-        },
-        {
-          name: "Go To The Gym7",
-          completed: false,
-          pointsValue: 5,
-        },
-        {
-          name: "Drink Water09",
-          completed: false,
-          pointsValue: 5,
-        },
-      ],
-    },
-  ]);
+  const [goals, setGoals] = useState([]);
+
+  const fetchGoals = async () => {
+    try {
+      const data = await fetchWithToken("/goals");
+      const jsonData = JSON.parse(data);
+      setGoals(jsonData.goals);
+    } catch (error) {
+      console.error("Failed to fetch goals:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGoals();
+  }, []);
+
   const [goalName, setGoalName] = useState("");
 
   const handleChange = (event) => {
     setGoalName(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevents the default form submit action
-    alert("A name was submitted: " + goalName);
-    // Here you can also call an API to submit the form data
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (goalName.trim().length > 0) {
+      try {
+        await fetchWithToken("/add_goal", "POST", {
+          name: goalName,
+        });
+        setGoalName("");
+        fetchGoals();
+      } catch (error) {
+        console.error("Error submitting new goal:", error);
+      }
+    }
   };
 
-  const handleDelete = (goalName) => {
-    const updatedGoals = goals.filter((goal) => goal.name !== goalName);
-    setGoals(updatedGoals);
+  const handleDelete = async (goalId) => {
+    console.log("goal id: ", goalId);
+    try {
+      await fetchWithToken("/remove_goal", "POST", {
+        goal_id: goalId,
+      });
+
+      fetchGoals();
+    } catch (error) {
+      console.error("Error submitting new goal:", error);
+    }
   };
 
   const handleTaskClick = (goalName, taskName) => {
@@ -115,19 +78,17 @@ const HomeGoals = () => {
     setGoals(updatedGoals);
   };
 
-  console.log(goals);
-
   return (
     <main className="HomeGoals">
       <h1 className="Head">Goals</h1>
       <section className="Goals">
         <div className="goal-container">
           {goals.map((goal) => (
-            <div className="Goal" key={goal.name}>
+            <div className="Goal" key={goal.goal_id}>
               <div className="Goal-Heading">
                 <h2>{goal.name}</h2>
                 <FaTrash
-                  onClick={() => handleDelete(goal.name)}
+                  onClick={() => handleDelete(goal.goal_id)}
                   role="button"
                   tabIndex="0"
                 />
@@ -157,6 +118,7 @@ const HomeGoals = () => {
               type="Goals"
               label="Add Goal"
               placeholder="Enter a Goal"
+              value={goalName}
               classNames={{
                 input: ["placeholder:text-black"],
               }}

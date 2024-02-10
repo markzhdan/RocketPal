@@ -7,9 +7,6 @@ import LoginLoading from "../../components/Loading/LoginLoading";
 const ProtectedRoute = ({ children }) => {
   const { user, isAuthenticating } = useUser();
 
-  console.log("user: ", user);
-  console.log("auth: ", isAuthenticating);
-
   if (isAuthenticating) {
     return <LoginLoading />;
   }

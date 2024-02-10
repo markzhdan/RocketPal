@@ -15,10 +15,12 @@ const RocketNavbar = () => {
   return (
     <nav className="RocketNavbar">
       <Navbar className="flex justify-evenly w-full">
-        <NavbarBrand>
-          <Logo />
-          <h1 className="font-bold text-inherit">RocketPal</h1>
-        </NavbarBrand>
+        <Link color="foreground" href="/">
+          <NavbarBrand>
+            <Logo />
+            <h1 className="font-bold text-inherit">RocketPal</h1>
+          </NavbarBrand>
+        </Link>
         <NavbarContent className="hidden sm:flex gap-8" justify="center">
           <NavbarItem isActive={false}>
             <Link color="foreground" href="/journals">
@@ -33,11 +35,11 @@ const RocketNavbar = () => {
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Link href="#">Login</Link>
+            <Link href="/login">Login</Link>
           </NavbarItem>
           <NavbarItem>
             <div className="UserProfile"></div>
-            <Button as={Link} color="primary" href="#" variant="flat">
+            <Button as={Link} color="primary" href="/register" variant="flat">
               Sign Up
             </Button>
           </NavbarItem>

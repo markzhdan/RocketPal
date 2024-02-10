@@ -10,7 +10,6 @@ export const UserProvider = ({ children }) => {
 
   const fetchUserData = async () => {
     const token = localStorage.getItem("rocketpal-token");
-    console.log("token: ", token);
 
     if (!token) {
       setUser(null);
@@ -21,7 +20,6 @@ export const UserProvider = ({ children }) => {
     // TODO: CHECK setuser in callback
     try {
       const response = await fetchWithToken("/me");
-      console.log("the resposne THING: ", response.user);
       setUser(response.user);
     } catch (error) {
       console.log("Error fetching user data:", error);

@@ -21,7 +21,6 @@ export default function Login() {
   const handlePasswordChange = (event) => setPassword(event.target.value);
 
   const fetchJWT = async (event) => {
-    event.preventDefault();
     try {
       const response = await fetchWithoutToken("/login", "POST", {
         email: username,
@@ -40,34 +39,12 @@ export default function Login() {
   };
 
   useEffect(() => {
-    console.log(user);
-    console.log("hello");
     if (user) {
       navigate("/home", { replace: true });
       return;
     }
 
-    // const fetchJWT = async () => {
-    //   try {
-    //     const response = await fetchWithoutToken("/login", "POST", {
-    //       username,
-    //       password,
-    //     });
-
-    //     console.log("response: ", response);
-
-    //     if (!response) throw new Error("Failed to authenticate");
-
-    //     localStorage.setItem("rocketpal-token", response.token);
-    //     // setUser(response.user);
-    //     navigate("/home", { replace: true });
-    //   } catch (err) {
-    //     console.error("Authentication error:", err);
-    //     navigate("/login", { replace: true });
-    //   }
-    // };
-
-    // fetchJWT();
+    fetchJWT();
   }, []);
 
   return (

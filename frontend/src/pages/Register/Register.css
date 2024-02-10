@@ -1,0 +1,39 @@
+.Register {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Register .RegisterContainer {
+  width: 400px;
+  height: 500px;
+  background-color: rgba(255, 255, 255, 0.2); /* 50% opacity white */
+  border-radius: 8px;
+}
+
+.Register .LogoContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+}
+.Register .LogoContainer h1 {
+  margin-left: 10px;
+  font-family: "Roboto";
+  font-size: 1.5rem;
+}
+
+.Register .Title p {
+  padding-left: 15px;
+  margin-bottom: 30px;
+  color: white;
+}
+
+.Register .FormContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+}

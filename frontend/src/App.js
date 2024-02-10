@@ -11,6 +11,7 @@ import RocketNavbar from "./components/navbar/Navbar";
 
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
 import Journals from "./pages/Journals/Journals";
 import Journal from "./pages/Journals/Journal/Journal";
@@ -23,7 +24,7 @@ import { UserProvider } from "./features/auth/UserContext";
 function App() {
   const ConditionalNavbar = () => {
     const location = useLocation();
-    const hideNavbarPaths = ["/login", "/anotherPath"];
+    const hideNavbarPaths = ["/login", "/register"];
     if (hideNavbarPaths.includes(location.pathname)) {
       return null;
     }
@@ -43,13 +44,15 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Frontpage />} />
 
-            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
             <Route path="/home" element={protect(<Home />)} />
             <Route path="/profile" element={protect(<Profile />)} />
             <Route path="/journals" element={protect(<Journals />)} />
             <Route path="/journal/:date" element={protect(<Journal />)} />
             <Route path="/therapist" element={protect(<Therapist />)} />
+
+            <Route path="/login" element={<Login />} />
 
             <Route path="*" element={<Missing />} />
           </Routes>

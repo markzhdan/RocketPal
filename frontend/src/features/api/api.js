@@ -17,8 +17,6 @@ export const fetchWithToken = async (endpoint, method = "GET", data = null) => {
       data: data,
     });
 
-    console.log("data: ", response.data);
-
     return response.data;
   } catch (error) {
     console.error("API call error:", error.response || error);
