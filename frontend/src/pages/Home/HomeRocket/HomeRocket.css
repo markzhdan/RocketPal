@@ -1,4 +1,27 @@
 .HomeRocket {
   flex-basis: 33.33%;
   border: 1px solid purple;
+  display: flex;
+  flex-direction: column;
+}
+
+.HomeRocket .Tracks {
+  display: flex;
+  flex-basis: 80%;
+}
+
+.HomeRocket .RocketTrack {
+  width: 50%;
+}
+.HomeRocket .Planets {
+  width: 50%;
+  height: 100%;
+  border: 2px solid green;
+}
+
+.HomeRocket .ProgressBar {
+  flex-basis: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

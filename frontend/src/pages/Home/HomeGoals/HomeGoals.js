@@ -21,7 +21,7 @@ const HomeGoals = () => {
           pointsValue: 5,
         },
         {
-          name: "Drink Water",
+          name: "Drink Waters",
           completed: false,
           pointsValue: 5,
         },
@@ -34,12 +34,12 @@ const HomeGoals = () => {
       icon: "healthIcon",
       tasks: [
         {
-          name: "Drink Water",
+          name: "Drink Water2",
           completed: false,
           pointsValue: 5,
         },
         {
-          name: "Go To The Gym",
+          name: "Go To The Gym3",
           completed: false,
           pointsValue: 5,
         },
@@ -57,17 +57,17 @@ const HomeGoals = () => {
       icon: "healthIcon",
       tasks: [
         {
-          name: "Drink Water",
+          name: "Drink Water6",
           completed: false,
           pointsValue: 5,
         },
         {
-          name: "Go To The Gym",
+          name: "Go To The Gym7",
           completed: false,
           pointsValue: 5,
         },
         {
-          name: "Drink Water",
+          name: "Drink Water09",
           completed: false,
           pointsValue: 5,
         },
@@ -75,9 +75,28 @@ const HomeGoals = () => {
     },
   ]);
 
-  const handleTaskClick = (task) => {
-    task.completed = !task.completed;
+  const handleTaskClick = (goalName, taskName) => {
+    const updatedGoals = goals.map((goal) => {
+      if (goal.name === goalName) {
+        const updatedTasks = goal.tasks.map((task) => {
+          if (task.name === taskName) {
+            return { ...task, completed: !task.completed };
+          }
+          return task;
+        });
+
+        // Optionally, update the goal's completed status based on tasks
+        const isGoalCompleted = updatedTasks.every((task) => task.completed);
+
+        return { ...goal, tasks: updatedTasks, completed: isGoalCompleted };
+      }
+      return goal;
+    });
+
+    setGoals(updatedGoals);
   };
+
+  console.log(goals);
 
   return (
     <>
@@ -100,7 +119,7 @@ const HomeGoals = () => {
                         <Checkbox
                           color="success"
                           isSelected={task.completed}
-                          onValueChange={handleTaskClick(task)}
+                          onChange={() => handleTaskClick(goal.name, task.name)}
                           lineThrough={task.completed}
                         >
                           {task.name}
