@@ -1,12 +1,6 @@
 import React from "react";
 import "./HomeTalks.css";
 import { useState } from "react";
-import { Checkbox } from "@nextui-org/react";
-import { FaBlackTie, FaTrashCan } from "react-icons/fa6";
-import { FaTrash } from "react-icons/fa";
-import { Input } from "@nextui-org/react";
-import { IoIosAddCircle } from "react-icons/io";
-import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaPencilAlt } from "react-icons/fa";
 import { Button } from "@nextui-org/react";
@@ -17,7 +11,7 @@ const HomeTalks = () => {
       journal_id: "2",
       date: "2024-02-10",
       content:
-        "Today was a productive day The weather was chilly, but refreshing. Afterwards, I spent the morning working on my project, making significant progress. In the afternoon, I met up with a friend for coffee and had a great conversation. Overall, feeling accomplished and content.",
+        "Today I felt a little down. I did nothing but play videogames all day and not a single bit of work. I didn't anything else besides junk food and soda today.  I have so many assignments due but I can't seem to get the motivation to do them. I feel like I am falling behind and losing myself. I want to start getting back into shape by working out and fixing my diet. I also need to lock in and get all my school work sorted out, I want to turn my life around.",
     },
   ]);
 
