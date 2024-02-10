@@ -75,6 +75,10 @@ const HomeGoals = () => {
     },
   ]);
 
+  const handleTaskClick = (task) => {
+    task.completed = !task.completed;
+  };
+
   return (
     <>
       {goals.length == 0 ? (
@@ -93,7 +97,12 @@ const HomeGoals = () => {
                   <div className="Tasks">
                     {goal.tasks.map((task) => (
                       <div className="Task" key={task.name}>
-                        <Checkbox defaultSelected color="success">
+                        <Checkbox
+                          color="success"
+                          isSelected={task.completed}
+                          onValueChange={handleTaskClick(task)}
+                          lineThrough={task.completed}
+                        >
                           {task.name}
                         </Checkbox>
                       </div>
