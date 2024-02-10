@@ -7,3 +7,9 @@ class GoalData(BaseModel):
     icon : str
     tasks : list
     ptvalue : int
+
+class NewGoalData(BaseModel):
+    name : str
+
+class RemoveGoalData(BaseModel):
+    goal_id : str 
