@@ -93,9 +93,9 @@ async def modify_goal(request : Request):
         result = goals_collection.update_one({"goal_id": goal_id}, {"$set": data})
 
         if result.modified_count == 1:
-            print("Goal updated successfully")
+            return {"message": "Goal updated successfully"}
         else:
-            print("Failed to update goal")
+            return {"message": "Failed to update goal"}
         
 @router.post("/remove_goal")
 async def remove_goal(request : Request):
@@ -109,6 +109,6 @@ async def remove_goal(request : Request):
         result = goals_collection.delete_one({"goal_id": goal_id})
 
         if result == 1:
-            return "Goal deleted succesfully"
+            return {"message": "Goal deleted successfully"}
         else:
-            return "Goal not found"
+            return {"message": "Goal not found "}
