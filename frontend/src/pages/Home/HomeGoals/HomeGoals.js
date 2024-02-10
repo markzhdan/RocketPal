@@ -85,7 +85,6 @@ const HomeGoals = () => {
           return task;
         });
 
-        // Optionally, update the goal's completed status based on tasks
         const isGoalCompleted = updatedTasks.every((task) => task.completed);
 
         return { ...goal, tasks: updatedTasks, completed: isGoalCompleted };

@@ -1,16 +1,16 @@
 import React from "react";
 import "./HomeRocket.css";
 
-import mars from "../../../assets/planets/mars.jpg";
+import earth from "../../../assets/planets/earth.gif";
 import jupiter from "../../../assets/planets/jupiter.png";
 import saturn from "../../../assets/planets/saturn-animated.gif";
 
-import rocket from "../../../assets/rocket2.gif";
+// import rocket from "../../../assets/rocket2.gif";
 
 import { Progress } from "@nextui-org/react";
 
 const planets = [
-  { name: "Mars", image: mars, size: 200 },
+  { name: "Earth", image: earth, size: 200 },
   { name: "Jupiter", image: jupiter, size: 100 },
   { name: "Saturn", image: saturn, size: 200 },
 ];
@@ -20,7 +20,7 @@ const HomeRocket = () => {
     <main className="HomeRocket">
       <div className="Tracks">
         <section className="RocketTrack">
-          <img src={rocket} alt="Rocketship Animation" width={150} />
+          {/* <img src={rocket} alt="Rocketship Animation" width={150} /> */}
         </section>
         <section className="Planets">
           {planets.map((planet) => (
