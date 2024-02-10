@@ -11,7 +11,16 @@
 
 .HomeRocket .RocketTrack {
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
 }
+
+.HomeRocket .RocketTrack .RocketTrackContainer {
+  transition: height 1s ease;
+}
+
 .HomeRocket .Planets {
   width: 50%;
   height: 100%;
