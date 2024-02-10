@@ -65,8 +65,15 @@ async def register_user(form_data: RegisterData):
     result = users_collection.insert_one(new_user)
     if not result:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to register user")
-
-    return {"message": "User registered successfully"}
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": new_user["user_id"]}, expires_delta=access_token_expires
+    )
+    user_data = {
+        "name" : new_user['name'],
+        "email" : new_user['email'],
+    }
+    return {"access_token": access_token, "user" : user_data, "token_type": "bearer"}
 
 @router.post("/login")
 async def login_for_access_token(form_data: LoginData):

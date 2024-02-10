@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from api.models.goal import GoalData, NewGoalData, RemoveGoalData
 import os
 from db.db import Database
-from ai import gen_tasks
+from ai_func import gen_tasks
 
 # Load environment variables from .env file
 load_dotenv()
