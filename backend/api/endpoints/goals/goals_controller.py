@@ -1,22 +1,15 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Request
+from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt
-from pymongo.mongo_client import MongoClient
 from bson.json_util import dumps
 import uuid
-from bson import ObjectId
 from dotenv import load_dotenv
 from api.models.goal import GoalData, NewGoalData, RemoveGoalData
-import os
 from db.db import Database
 from ai_func import gen_tasks
+from api.endpoints.helper import get_current_user
 
 # Load environment variables from .env file
 load_dotenv()
-
-SECRET_KEY = os.environ.get("SECRET_KEY")
-ALGORITHM = os.environ.get("ALGORITHM")
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.environ.get("ACCESS_TOKEN_EXPIRE_MINUTES"))
     
 router = APIRouter()
 
@@ -26,24 +19,6 @@ goals_collection = client.Goals
 
 oauth2_scheme_token = OAuth2PasswordBearer(tokenUrl="token")
 
-def get_current_user(token: str = Depends(oauth2_scheme_token)):
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id: str = payload.get("sub")
-        if user_id is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid authentication credentials",
-                headers={"WWW-Authenticate": "Bearer"},
-            )
-        return user_id
-    except JWTError:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    
 @router.get("/get_goals")
 def get_goals(token: str = Depends(oauth2_scheme_token)):
     user_id = get_current_user(token)
@@ -54,7 +29,7 @@ def get_goals(token: str = Depends(oauth2_scheme_token)):
         goals_list = []
         for goal in goals:
             goals_list.append(goal)
-        data = {"goals" : goals_list}
+        data = {"goals" : goals_list, "status_code" : 200}
         return dumps(data)
     
 @router.post("/add_goal")
@@ -72,10 +47,8 @@ async def add_goal(request_body : NewGoalData, token: str = Depends(oauth2_schem
         result = goals_collection.insert_one(data)
 
         if result.inserted_id:
-            # Return the inserted document's ID
-            return {"message": "Goal added successfully", "goal_id": str(result.inserted_id)}
+            return {"message": "Goal added successfully", "status_code" : 200}
         else:
-            # If insertion failed, raise an HTTPException with a 500 status code
             return {"message": "Goal not added, error", "status_code" : 500}
     
 
@@ -86,9 +59,9 @@ async def modify_goal(request_body: GoalData, token: str = Depends(oauth2_scheme
         goal_id = request_body.goal_id
         result = goals_collection.update_one({"goal_id": goal_id}, {"$set": request_body.model_dump()})
         if result.modified_count == 1:
-            return {"message": "Goal updated successfully"}
+            return {"message": "Goal updated successfully", "status_code" : 200}
         else:
-            return {"message": "Failed to update goal"}
+            return {"message": "Failed to update goal", "status_code" : 500}
         
 @router.post("/remove_goal")
 async def remove_goal(request_body : RemoveGoalData, token: str = Depends(oauth2_scheme_token)):
@@ -97,8 +70,8 @@ async def remove_goal(request_body : RemoveGoalData, token: str = Depends(oauth2
         goal_id = request_body.goal_id
         goals_collection = client.Goals
         result = goals_collection.delete_one({"goal_id": goal_id})
-
+    
         if result.deleted_count == 1:
-            return {"message": "Goal deleted successfully"}
+            return {"message": "Goal deleted successfully", "status_code" : 200}
         else:
-            return {"message": "Goal not found "}
+            return {"message": "Goal not found", "status_code" : 500}

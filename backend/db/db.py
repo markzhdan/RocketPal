@@ -1,21 +1,18 @@
 
 from pymongo.mongo_client import MongoClient
+import os
+from dotenv import load_dotenv
 
-# uri = "mongodb+srv://parkjae433:zBazf6Rzca8N4ccr@rocketpalcluster.txs3ukk.mongodb.net/?retryWrites=true&w=majority"
-# db_name = "RocketPalDB"
+load_dotenv()
+URI = os.environ.get("URI")
+DB_NAME = os.environ.get("DB_NAME")
 
 class Database:
     def __init__(self):
-        self.client = MongoClient("mongodb+srv://parkjae433:zBazf6Rzca8N4ccr@rocketpalcluster.txs3ukk.mongodb.net/?retryWrites=true&w=majority")
+        self.client = MongoClient(URI)
 
     def close(self):
         self.client.close()
 
     def get_database(self):
-        return self.client["RocketPalDB"]
-
-# # Singleton database instance
-# client = Database().get_database()
-
-# for user in client['Users'].find():
-#     print(user)
+        return self.client[DB_NAME]

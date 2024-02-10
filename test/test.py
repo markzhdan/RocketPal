@@ -118,10 +118,32 @@ def generate_response(text):
     headers = {"Authorization": f"Bearer {valid_token}"}
 
     response = requests.post(generate_response_url, json = text, headers = headers)
-    
 
 
-generate_response({"text" : "I am very stressed"})
+goal_data = {
+  "goal_id": "5e8836fc-f1bc-487f-88c7-1037ce3b8b47",
+  "user_id": "c32254f6-96e5-4777-934c-42ec17c16087",
+  "tasks": [
+    {
+      "name": "Update online dating profile",
+      "completed": True,
+      "pointsValue": 10
+    },
+    {
+      "name": "Join a social club or group",
+      "completed": True,
+      "pointsValue": 10
+    },
+    {
+      "name": "Ask a friend to set you up on a date",
+      "completed": False,
+      "pointsValue": 10
+    }
+  ],
+  "ptvalue": 20
+}
+
+# add_goal({"name" : "find a girlfriend"})
 
 # add_task({"name" : "drink juice", "goal_id" : "1c0d6409-1d11-47ae-ad57-67c96b76607a"})
 
@@ -129,7 +151,7 @@ generate_response({"text" : "I am very stressed"})
 
 # add_goal(new_goal_data)
 
-# modify_goal(goal_data)
+modify_goal(goal_data)
 
 # login_user({
 #                "email" : "park123@gmail.com",
