@@ -82,7 +82,7 @@ async def login_for_access_token(form_data: LoginData):
     access_token = create_access_token(
         data={"sub": user["user_id"]}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "user" : user, "token_type": "bearer"}
 
 def get_current_user(token: str = Depends(oauth2_scheme_token)):
     try:
@@ -112,6 +112,6 @@ async def verify_user(token: str = Depends(oauth2_scheme_token)):
     user_id = get_current_user(token)
     user = get_user_by_id(user_id)
     if user:
-        return {"user" : user['name'], "status_code" : status.HTTP_200_OK}
+        return {"user" : user, "status_code" : status.HTTP_200_OK}
     else:
         return {"user" : None, "status_code" : status.HTTP_401_UNAUTHORIZED}

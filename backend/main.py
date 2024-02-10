@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from api.endpoints.auth.auth_router import router as auth_router
 from api.endpoints.goals.goals_router import router as goals_router
+from api.endpoints.tasks.tasks_router import router as tasks_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -17,3 +18,4 @@ app.add_middleware(
 )
 app.include_router(auth_router, tags=["auth"])
 app.include_router(goals_router, tags = ["goals"])
+app.include_router(tasks_router, tags = ["tasks"])

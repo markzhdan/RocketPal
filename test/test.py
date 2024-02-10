@@ -10,6 +10,8 @@ add_goal_url = "http://127.0.0.1:8000/api/add_goal"
 modify_goal_url = "http://127.0.0.1:8000/api/modify_goal"
 auth_me_url = "http://127.0.0.1:8000/api/me"
 remove_goal_url = "http://127.0.0.1:8000/api/remove_goal"
+add_task_url = "http://127.0.0.1:8000/api/add_task"
+
 from pydantic import BaseModel
 
 valid_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjMzIyNTRmNi05NmU1LTQ3NzctOTM0Yy00MmVjMTdjMTYwODciLCJleHAiOjE3MTM1ODM3MTJ9.GOuFYZKaaVUlsKLXrpwcdRz15OmuGMZB1XZtAfWf2F0"
@@ -87,15 +89,23 @@ def test_auth_me():
     response = requests.get(auth_me_url, headers = headers)
     print(response.content)
 
+def add_task(new_task):
+    headers = {"Authorization": f"Bearer {valid_token}"}
+
+    response = requests.post(add_task_url, json = new_task, headers = headers)
+    print(response.content)
+
+add_task({"name" : "drink juice", "goal_id" : "1c0d6409-1d11-47ae-ad57-67c96b76607a"})
+
 # remove_goal("a18f65be-79a1-48d6-ae7e-15e680165590")
 
 # add_goal(new_goal_data)
 
 # modify_goal(goal_data)
 
-login_user({
-               "email" : "park123@gmail.com",
-               "password" : "yo123"})
+# login_user({
+#                "email" : "park123@gmail.com",
+#                "password" : "yo123"})
 
 
 # print(LoginData.model_validate({"email" : "marker@gmail.com",
