@@ -2,9 +2,9 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 const Journal = () => {
-  const { matchId } = useParams();
+  const { date } = useParams();
 
-  return <div>Journal: {matchId}</div>;
+  return <main className="Journal">Journal: {date}</main>;
 };
 
 export default Journal;

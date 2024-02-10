@@ -1,7 +1,7 @@
 import React from "react";
 
 const Missing = () => {
-  return <div>Missing</div>;
+  return <main className="Missing">Missing</main>;
 };
 
 export default Missing;

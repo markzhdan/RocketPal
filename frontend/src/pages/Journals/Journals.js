@@ -1,7 +1,7 @@
 import React from "react";
 
 const Journals = () => {
-  return <div>Journals</div>;
+  return <main className="Journals">Journals</main>;
 };
 
 export default Journals;

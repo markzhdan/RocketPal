@@ -23,7 +23,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/journals" element={<Journals />} />
-          <Route path="/journal/:data" element={<Journal />} />
+          <Route path="/journal/:date" element={<Journal />} />
           <Route path="/therapist" element={<Therapist />} />
 
           <Route path="*" element={<Missing />} />
