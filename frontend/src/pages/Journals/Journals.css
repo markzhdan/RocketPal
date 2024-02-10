@@ -1,37 +1,122 @@
-.journal-container {
+.Container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Journals {
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 90%;
+  border-radius: 9px;
 }
 
-.journal {
-  border: 1px solid #ccc;
-  padding: 10px;
+.Journals h1 {
+  background-color: rgba(85, 94, 255, 0.2);
+  padding: 0px 40px;
+  border-radius: 8px;
+  font-size: 30px;
+  font-weight: bold;
   margin-bottom: 20px;
-  border-radius: 5px;
+  margin-top: 20px;
 }
 
-.journal-content {
+.Journals .Entries-Container {
   display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
-.sub-entries {
-  flex: 1;
-  margin-right: 20px;
-  border-radius: 5px;
-}
-
-.sub-container {
-  margin-bottom: 10px;
-  border-radius: 5px;
-}
-
-.entries {
-  flex: 1;
-}
-.entry {
+.Journals .Journal-Entry {
+  width: 18%;
+  min-width: 200px;
+  flex-wrap: wrap;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
+  min-height: 240px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px; /* Add rounded corners */
-  margin-bottom: 10px;
+}
+
+.Journals .Add-Container {
+  background-color: red;
+  gap: 10px;
+  padding: 60px 20px;
+  background-color: rgba(255, 255, 255, 0.2); /* 50% opacity white */
+  border-radius: 8px;
+  width: 18%;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 200px;
+  min-height: 240px;
+  text-wrap: wrap;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.Journals .Add-Container svg:focus,
+.Journals .Add-Container svg:hover {
+  color: green;
+  outline: none;
+}
+
+.Journals .Journal-Headers {
+  display: flex;
+  display: column;
+  justify-content: space-between;
+  padding: 2px;
+  align-items: center;
+}
+
+.Journals svg {
+  color: white;
+  cursor: pointer;
+}
+
+.Journals svg:focus,
+.Journals svg:hover {
+  color: red;
+  outline: none;
+}
+
+.Journals .Journal-Entry:hover {
+  background-color: rgb(66, 66, 128);
+
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.Journals .Add-Container:hover {
+  background-color: rgb(66, 66, 128);
+
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.Journals .Add-Container h2 {
+  font-size: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center horizontally */
+  height: 100%; /* Ensures vertical centering */
+  margin: 0px;
+}
+
+.slide-bar {
+  display: none;
+}
+
+.slide-left-bar {
+  display: none;
+}
+
+.Journals .icons {
+  display: flex;
+  gap: 10px;
 }

@@ -105,3 +105,11 @@
   color: green;
   outline: none;
 }
+
+.slide-bar {
+  display: none;
+}
+
+.slide-left-bar {
+  display: none;
+}

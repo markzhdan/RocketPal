@@ -1,0 +1,33 @@
+.Journal-Container {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.Journal-Container .Journal {
+  width: 60%;
+}
+
+.Journal-Container textarea {
+  color: black;
+  height: 100px;
+  animated: true;
+  size: "xl";
+  min-height: 250px;
+}
+
+.Journal-Container h1 {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.Journal-Container .Journal .Save-Container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  gap: 20px;
+}

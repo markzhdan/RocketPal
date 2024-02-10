@@ -2,3 +2,23 @@
   flex-basis: 33.33%;
   border: 1px solid blue;
 }
+
+.HomeTalks .Recent-Journal {
+  width: 18%;
+  flex-wrap: wrap;
+  background-color: red;
+  border-radius: 8px;
+  margin: 5px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  min-height: 240px;
+  padding: 10px;
+}
+
+.HomeTalks .Main-Container {
+  display: flex;
+  border: 2px solid red;
+}
+
+.HomeTalks .Journal-Contain {
+  border: 2px solid red;
+}

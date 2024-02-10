@@ -1,120 +1,121 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Journals.css";
+import { Checkbox } from "@nextui-org/react";
+import { FaBlackTie, FaTrashCan } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa";
+import { Input } from "@nextui-org/react";
+import { IoIosAddCircle } from "react-icons/io";
+import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { FaPencilAlt } from "react-icons/fa";
 
 const Journals = () => {
+  const [selectedEntryContent, setSelectedEntryContent] = useState("");
+  const [entry, setEntries] = useState([
+    {
+      journal_id: "1",
+      date: "2024-02-10",
+      content:
+        "Today was a productive day. I woke up early and went for a run in the park. The weather was chilly, but refreshing. Afterwards, I spent the morning working on my project, making significant progress. In the afternoon, I met up with a friend for coffee and had a great conversation. Overall, feeling accomplished and content.",
+    },
+    {
+      journal_id: "2",
+      date: "2024-02-09",
+      content:
+        "Spent the day indoors due to heavy rain. Despite the gloomy weather, I managed to catch up on some reading and watched a few episodes of my favorite TV show. Feeling relaxed and rejuvenated.",
+    },
+    {
+      journal_id: "3",
+      date: "2024-02-08",
+      content:
+        "Attended a workshop on mindfulness and meditation today. It was enlightening to learn new techniques for managing stress and improving focus. I'm determined to incorporate these practices into my daily routine.",
+    },
+    {
+      journal_id: "4",
+      date: "2024-02-10",
+      content:
+        "Today was a productive day. I woke up early and went for a run in the park. The weather was chilly, but refreshing. Afterwards, I spent the morning working on my project, making significant progress. In the afternoon, I met up with a friend for coffee and had a great conversation. Overall, feeling accomplished and content.",
+    },
+    {
+      journal_id: "5",
+      date: "2024-02-09",
+      content:
+        "Spent the day indoors due to heavy rain. Despite the gloomy weather, I managed to catch up on some reading and watched a few episodes of my favorite TV show. Feeling relaxed and rejuvenated.",
+    },
+    {
+      journal_id: "6",
+      date: "2024-02-08",
+      content:
+        "Attended a workshop on mindfulness and meditation today. It was enlightening to learn new techniques for managing stress and improving focus. I'm determined to incorporate these practices into my daily routine.",
+    },
+  ]);
+
+  const handleEdit = (content) => {
+    setSelectedEntryContent(content);
+  };
+
+  const handleAddEntry = () => {
+    const newEntry = {
+      journal_id: parseInt(entry.length + 1),
+      date: new Date().toISOString().slice(0, 10),
+      content: "Click to pen to edit...", // You can customize this
+    };
+    setEntries([...entry, newEntry]);
+  };
+
+  const handleDelete = (entryId) => {
+    setEntries((prevEntries) =>
+      prevEntries.filter((entry) => entry.journal_id !== entryId)
+    );
+  };
+
   return (
-    <main className="Journals">
-      <div className="journal-container">
-        <JournalContainer
-          title="Container 1"
-          includeHeading={true}
-          maxEntries={3}
-        />
-        <JournalContainer
-          title="Container 2"
-          includeHeading={false}
-          maxEntries={3}
-        />
-        <JournalContainer
-          title="Container 3"
-          includeHeading={false}
-          maxEntries={3}
-        />
-      </div>
-    </main>
+    <div className="Container">
+      <main className="Journals">
+        <div className="Journal-Header">
+          <h1>Self-Reflection Journals</h1>
+        </div>
+
+        <section className="Entries-Container">
+          <div className="Add-Container">
+            <h2>Add a Journal!</h2>
+            <IoIosAddCircle
+              style={{ fontSize: "80px" }}
+              onClick={handleAddEntry}
+            />
+          </div>
+          {entry.map((entry) => (
+            <div
+              className="Journal-Entry"
+              key={entry.journal_id}
+              // onClick={() => redirectToJournalPage(entry.entry_id)}
+            >
+              <div className="Journal-Headers">
+                <h2>{entry.date}</h2>
+                <div className="icons">
+                  <Link
+                    to={`/journal/${entry.journal_id}`}
+                    key={entry.journal_id}
+                    className="Edit-Journal"
+                  >
+                    <FaPencilAlt />
+                  </Link>
+                  <FaTrash
+                    onClick={() => handleDelete(entry.journal_id)}
+                    role="button"
+                    tabIndex="0"
+                  />
+                </div>
+              </div>
+              <div className="Content">
+                <p>{entry.content.substring(0, 250) + "..."}</p>
+              </div>
+            </div>
+          ))}
+        </section>
+      </main>
+    </div>
   );
 };
-
-function JournalContainer({ title, includeHeading }) {
-  const [entries, setEntries] = useState([]);
-  const [currentContainer, setCurrentContainer] = useState(0);
-
-  const addEntry = (entry) => {
-    setEntries([...entries, entry]);
-    setCurrentContainer(currentContainer + 1);
-  };
-
-  return (
-    <div className="journal">
-      {includeHeading && <h1>Journals</h1>}
-      <div className="journal-content">
-        <div className="sub-entries">
-          {currentContainer === 0 && <SubContainer addEntry={addEntry} />}
-          {currentContainer > 0 && <SubContainer addEntry={addEntry} />}
-        </div>
-        <div className="entries">
-          {entries.map((entry, index) => (
-            <JournalEntry
-              key={index}
-              date={entry.date}
-              content={entry.content}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SubContainer({ addEntry }) {
-  const [date, setDate] = useState("");
-  const [content, setContent] = useState("");
-  const [isInputOpen, setIsInputOpen] = useState(false); // State to track whether input section is open
-
-  const toggleInput = () => {
-    setIsInputOpen(!isInputOpen);
-  };
-
-  const addJournalEntry = () => {
-    if (date && content) {
-      addEntry({ date, content });
-      setDate("");
-      setContent("");
-      setIsInputOpen(false); // Close input section after adding entry
-    }
-  };
-
-  return (
-    <div className="sub-container">
-      {isInputOpen ? (
-        <div className="journal-input">
-          <input
-            type="text"
-            placeholder="Date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-          <textarea
-            placeholder="Write your journal entry here..."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          ></textarea>
-          <button onClick={addJournalEntry}>Add Entry</button>
-        </div>
-      ) : (
-        <div className="plus-sign" onClick={toggleInput}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-          >
-            <path fill="none" d="M0 0h24v24H0z" />
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 7h2v6h6v2h-6v6h-2v-6H5v-2h6z" />
-          </svg>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function JournalEntry({ date, content }) {
-  return (
-    <div className="entry">
-      <div className="entry-header">Date: {date}</div>
-      <div className="entry-content">Content: {content}</div>
-    </div>
-  );
-}
 
 export default Journals;

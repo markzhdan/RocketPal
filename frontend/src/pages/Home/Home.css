@@ -4,3 +4,11 @@
   height: 100%;
   width: 100%;
 }
+
+.slide-bar {
+  display: none;
+}
+
+.slide-left-bar {
+  display: none;
+}
